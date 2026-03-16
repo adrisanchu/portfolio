@@ -12,12 +12,33 @@ interface Props {
 }
 
 const { title, description, image, isHomepage = false } = Astro.props;
+
+// Auto-generate BreadcrumbList for subpages
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const siteBase = Astro.site!.href.replace(/\/$/, '');
+let breadcrumbSchema = null;
+if (!isHomepage && pathSegments.length > 0) {
+	const items: Array<{ "@type": string; position: number; name: string; item: string }> = [
+		{ "@type": "ListItem", position: 1, name: "Home", item: siteBase + "/" },
+	];
+	let builtPath = '';
+	for (let i = 0; i < pathSegments.length; i++) {
+		builtPath += '/' + pathSegments[i];
+		const isLast = i === pathSegments.length - 1;
+		const segmentName = isLast && title
+			? title
+			: pathSegments[i].charAt(0).toUpperCase() + pathSegments[i].slice(1).replace(/-/g, ' ');
+		items.push({ "@type": "ListItem", position: i + 2, name: segmentName, item: siteBase + builtPath });
+	}
+	breadcrumbSchema = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items };
+}
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} image={image} isHomepage={isHomepage} />
+		{breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
 		<!-- Theme init: read persisted preference before first paint to avoid flash -->
 		<script is:inline>
 			(function () {
