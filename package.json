@@ -8,16 +8,14 @@
 	"scripts": {
 		"dev": "astro dev",
 		"build": "astro build",
-		"preview": "astro build && wrangler pages dev",
+		"preview": "astro build && wrangler pages dev dist/",
 		"astro": "astro",
 		"generate-types": "wrangler types",
-		"deploy": "astro build && wrangler pages deploy",
+		"deploy": "astro build && wrangler pages deploy dist/ --project-name adriansanchez",
 		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^13.1.1",
 		"@astrojs/mdx": "^5.0.0",
-		"@astrojs/rss": "^4.0.17",
 		"@astrojs/sitemap": "^3.7.1",
 		"@tailwindcss/vite": "^4.2.1",
 		"astro": "^6.0.4",
