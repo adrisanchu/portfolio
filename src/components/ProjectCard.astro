@@ -25,10 +25,11 @@ const { slug, title, summary, stack, year, featured = false, confidential = true
 	<h3 class="card-title">{title}</h3>
 	<p class="card-summary">{summary}</p>
 	<div class="card-stack">
-		{stack.slice(0, 4).map((tech) => (
-			<span class="stack-chip">{tech}</span>
-		))}
-		{stack.length > 4 && <span class="stack-chip muted">+{stack.length - 4}</span>}
+		{stack.length <= 5
+			? stack.map((tech) => <span class="stack-chip">{tech}</span>)
+			: stack.slice(0, 3).map((tech) => <span class="stack-chip">{tech}</span>)
+		}
+		{stack.length > 5 && <span class="stack-chip muted">+{stack.length - 3}</span>}
 	</div>
 	<span class="card-arrow">View case study →</span>
 </a>
