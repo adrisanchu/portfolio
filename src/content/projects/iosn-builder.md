@@ -1,8 +1,8 @@
 ---
 title: "IoSN Builder"
 summary: "ETL pipeline delivering standardised network models to 40 European TSOs — replacing a brittle manual process with a reproducible, auditable workflow."
-stack: ["Python", "DuckDB", "PLEXOS API", "Pandas", "Docker"]
-tags: ["Data Engineering", "ETL", "Energy Infrastructure", "European Grid"]
+stack: ["Python", "DuckDB", "PLEXOS API", "Gitlab"]
+tags: ["Data Engineering", "ETL", "Energy Modelling", "European Grid"]
 featured: true
 confidential: true
 year: 2026

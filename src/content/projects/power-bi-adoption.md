@@ -1,8 +1,8 @@
 ---
 title: "Power BI Adoption at Red Eléctrica"
 summary: "Led the BI capability rollout across the planning department — from zero dashboards to a self-service analytics culture adopted by non-technical stakeholders."
-stack: ["Power BI", "DAX", "Power Query (M)", "SQL", "Azure"]
-tags: ["BI Leadership", "Data Visualisation", "Change Management", "KPI Design"]
+stack: ["Power BI", "DAX", "Power Query (M)", "SQL"]
+tags: ["Business Intelligence", "Data Visualisation", "Change Management", "KPI Design"]
 featured: false
 confidential: true
 year: 2021

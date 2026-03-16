@@ -1,8 +1,8 @@
 ---
 title: "PlanningCRM"
 summary: "Full-stack CRM built solo for Red Eléctrica's planning department — 20 users, production since 2025."
-stack: ["SvelteKit", "TypeScript", "MySQL", "Python", "Docker"]
-tags: ["Full-Stack", "Product Ownership", "Internal Tooling"]
+stack: ["SvelteKit", "MySQL", "Python", "Docker"]
+tags: ["Full-Stack", "Product Ownership", "Internal Tooling", "Asset Management"]
 featured: true
 confidential: true
 year: 2025
