@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { slug, title, summary, stack, year, featured = false, confidential = true } = Astro.props;
+const  MAX_STACK = 4;
 ---
 
 <a href={`/projects/${slug}`} class:list={['project-card', { featured }]}>
@@ -25,11 +26,11 @@ const { slug, title, summary, stack, year, featured = false, confidential = true
 	<h3 class="card-title">{title}</h3>
 	<p class="card-summary">{summary}</p>
 	<div class="card-stack">
-		{stack.length <= 5
+		{stack.length <= MAX_STACK
 			? stack.map((tech) => <span class="stack-chip">{tech}</span>)
-			: stack.slice(0, 3).map((tech) => <span class="stack-chip">{tech}</span>)
+			: stack.slice(0, MAX_STACK).map((tech) => <span class="stack-chip">{tech}</span>)
 		}
-		{stack.length > 5 && <span class="stack-chip muted">+{stack.length - 3}</span>}
+		{stack.length > MAX_STACK && <span class="stack-chip muted">+{stack.length - MAX_STACK}</span>}
 	</div>
 	<span class="card-arrow">View case study →</span>
 </a>

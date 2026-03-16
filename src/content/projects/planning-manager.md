@@ -1,7 +1,7 @@
 ---
 title: "PlanningManager"
 summary: "Python OOP library that replaced a set of critical VBA macros — now maintained and extended by two other engineers."
-stack: ["Python", "FastAPI", "MySQL", "pandas", "openpyxl"]
+stack: ["Python", "FastAPI", "MySQL", "pandas", "Git"]
 tags: ["Automation", "Refactoring", "Python", "Internal Tooling"]
 featured: false
 confidential: true
