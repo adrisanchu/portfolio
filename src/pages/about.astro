@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { LINKEDIN_URL } from '../consts';
+---
+
+<Layout
+	title="About"
+	description="The story behind the engineer — from nuclear research in France to building software for Spain's national grid."
+>
+	<article class="about-page">
+		<header class="page-header">
+			<p class="page-label">About</p>
+			<h1 class="page-title">The unusual arc.</h1>
+			<p class="page-intro">
+				Most engineers follow a straight line. Mine bent — and every bend made the next one sharper.
+			</p>
+		</header>
+
+		<div class="about-content">
+			<section class="prose-section">
+				<h2>From Madrid to Paris</h2>
+				<p>
+					I grew up in Madrid and studied Industrial Engineering at the Universidad Politécnica de Madrid,
+					specialising in energy systems. In 2015, I was selected for an international exchange at
+					<strong>École Polytechnique</strong> — France's most competitive engineering institution —
+					where I completed an MSc year in Mechanics & Energy. The year ended with a 20/20 distinction
+					on my research thesis and a fellowship from the EDF Foundation and Institut de France that
+					funded the following year entirely on academic merit.
+				</p>
+				<p>
+					That next year was a Master's in Nuclear Energy at <strong>Université Paris-Saclay</strong>,
+					focused on reactor decommissioning and radioactive waste management. I followed it with an
+					engineering internship at <strong>EDF's nuclear division in Paris</strong>, producing
+					a techno-economic business plan for an innovative nuclear waste treatment facility — a study
+					that directly led to an EDF–Veolia industrial partnership — and a research placement at
+					<strong>ANDRA</strong> — the agency responsible for France's deep geological nuclear waste
+					disposal project. By 2017, I had worked inside three of the four main pillars of the French
+					nuclear sector.
+				</p>
+			</section>
+
+			<section class="prose-section">
+				<h2>The infrastructure chapter</h2>
+				<p>
+					Still in Paris, I joined <strong>EGIS</strong> as a PMO on Hinkley Point C —
+					the £26 billion nuclear power station under construction in Somerset, UK. Over 17 months
+					I progressed from coordinating a 35M€ civil works contract to controlling a +100M€
+					budget package and leading the development of a Power BI monitoring toolset for the
+					programme. Working in a high-stakes, heavily regulated construction environment taught
+					me that rigour and clarity of communication matter more than technical depth when
+					decisions have irreversible consequences.
+				</p>
+				<p>
+					After a brief stint in BI consulting at <strong>kShuttle</strong>, I moved back to Spain and 
+					joined <strong>Red Eléctrica</strong> — Spain's national electricity transmission operator and
+					part of the Redeia group. Over the next five years I worked in the grid planning
+					department, becoming increasingly involved in the software and data side of the work.
+				</p>
+			</section>
+
+			<section class="prose-section">
+				<h2>The software arc</h2>
+				<p>
+					The transition into software wasn't a career change — it was a natural extension. The
+					planning department's work was drowning in Excel files, fragile macros, and manual
+					processes that any decent piece of software could replace. I started building tools to
+					fix the pain points I saw every day.
+				</p>
+				<p>
+					What began as Python scripts became a full-stack CRM adopted by 20 colleagues.
+					What began as data cleanup routines became an ETL pipeline delivering standardised
+					network models to 40 European TSOs. The scale was different, but the underlying drive
+					was the same: make the work more reliable, more visible, and easier for the people
+					doing it.
+				</p>
+				<p>
+					Today I hold the Software Architect role in the planning department — responsible for
+					the technical direction of internal tooling, the engineering standards the team follows,
+					and the bridge between domain expertise and software quality.
+				</p>
+			</section>
+
+			<section class="prose-section">
+				<h2>Outside work</h2>
+				<p>
+					I kitesurf whenever the wind cooperates, climb when it doesn't, and play piano
+					when I need to think with my hands instead of my head. I speak Spanish, English,
+					and French — a consequence of the Paris years that turned out to be genuinely useful.
+				</p>
+				<p>
+					I'm based in Ibiza and open to collaborate on interesting problems
+					at the intersection of software, data, and critical infrastructure.
+				</p>
+				<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" class="cta-link">
+					Connect on LinkedIn →
+				</a>
+			</section>
+		</div>
+	</article>
+</Layout>
+
+<style>
+	.about-page {
+		max-width: 44rem;
+		margin: 0 auto;
+		padding: 3rem 1.5rem 5rem;
+	}
+
+	.page-header {
+		margin-bottom: 3.5rem;
+		padding-bottom: 2.5rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.page-label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--accent);
+		margin-bottom: 0.75rem;
+	}
+
+	.page-title {
+		font-size: clamp(2rem, 5vw, 3rem);
+		letter-spacing: -0.03em;
+		color: var(--fg);
+		margin-bottom: 1rem;
+	}
+
+	.page-intro {
+		font-size: 1.125rem;
+		color: var(--fg-muted);
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	.about-content {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+	}
+
+	.prose-section h2 {
+		font-size: 1.25rem;
+		color: var(--fg);
+		margin-bottom: 1rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.prose-section p {
+		color: var(--fg-muted);
+		margin-bottom: 1rem;
+		line-height: 1.8;
+	}
+
+	.prose-section p:last-child {
+		margin-bottom: 0;
+	}
+
+	.prose-section strong {
+		color: var(--fg);
+	}
+
+	.cta-link {
+		display: inline-flex;
+		align-items: center;
+		margin-top: 1rem;
+		font-size: 0.9375rem;
+		font-weight: 600;
+		color: var(--accent);
+		transition: color 0.15s ease;
+	}
+
+	.cta-link:hover {
+		color: var(--accent-hover);
+	}
+</style>

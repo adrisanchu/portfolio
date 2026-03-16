@@ -1,0 +1,305 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../consts';
+
+const navLinks = [
+	{ href: '/about', label: 'About' },
+	{ href: '/experience', label: 'Experience' },
+	{ href: '/projects', label: 'Projects' },
+	{ href: '/skills', label: 'Skills' },
+	{ href: '/education', label: 'Education' },
+	{ href: '/contact', label: 'Contact' },
+];
+---
+
+<header class="site-header">
+	<nav class="nav-inner">
+		<a href="/" class="nav-logo" aria-label="Home">
+			<span class="logo-initials">AS</span>
+			<span class="logo-name">{SITE_TITLE.split(' ').slice(0, 2).join(' ')}</span>
+		</a>
+		<ul class="nav-links" role="list">
+			{navLinks.map(({ href, label }) => (
+				<li><HeaderLink href={href}>{label}</HeaderLink></li>
+			))}
+		</ul>
+		<a href="/contact" class="nav-cta">Get in touch</a>
+		<button class="hamburger" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+			<span class="ham-line"></span>
+			<span class="ham-line"></span>
+			<span class="ham-line"></span>
+		</button>
+	</nav>
+</header>
+
+<!-- Mobile menu — uses global styles so position:fixed is guaranteed to apply -->
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+	<button id="nav-close" aria-label="Close menu">✕</button>
+	<ul id="mobile-nav-list" role="list">
+		{navLinks.map(({ href, label }) => (
+			<li><a href={href}>{label}</a></li>
+		))}
+	</ul>
+	<a href="/contact" id="mobile-cta-link">Get in touch</a>
+</div>
+<div id="nav-backdrop" aria-hidden="true"></div>
+
+<script>
+	const toggle = document.getElementById('nav-toggle')!;
+	const closeBtn = document.getElementById('nav-close')!;
+	const menu = document.getElementById('mobile-menu')!;
+	const backdrop = document.getElementById('nav-backdrop')!;
+	const scrollArea = document.getElementById('scroll-area');
+
+	function openMenu() {
+		menu.classList.add('open');
+		backdrop.classList.add('open');
+		menu.setAttribute('aria-hidden', 'false');
+		if (scrollArea) scrollArea.style.overflow = 'hidden';
+		toggle.setAttribute('aria-expanded', 'true');
+		closeBtn.focus();
+	}
+
+	function closeMenu() {
+		menu.classList.remove('open');
+		backdrop.classList.remove('open');
+		menu.setAttribute('aria-hidden', 'true');
+		if (scrollArea) scrollArea.style.overflow = '';
+		toggle.setAttribute('aria-expanded', 'false');
+		toggle.focus();
+	}
+
+	toggle.addEventListener('click', openMenu);
+	closeBtn.addEventListener('click', closeMenu);
+	backdrop.addEventListener('click', closeMenu);
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && menu.classList.contains('open')) closeMenu();
+	});
+	menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+</script>
+
+<!-- Global styles for mobile overlay — must be global so position:fixed applies outside header -->
+<style is:global>
+	@keyframes slideInRight {
+		from { transform: translateX(100%); }
+		to { transform: translateX(0); }
+	}
+
+	#mobile-menu {
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 100;
+		width: min(18rem, 88vw);
+		background: var(--bg-surface);
+		border-left: 1px solid var(--border);
+		display: none;
+		flex-direction: column;
+		padding: 1.5rem;
+		gap: 1.5rem;
+		box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
+	}
+
+	#mobile-menu.open {
+		display: flex;
+		animation: slideInRight 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	#nav-close {
+		align-self: flex-end;
+		width: 2.25rem;
+		height: 2.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: none;
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		cursor: pointer;
+		color: var(--fg-muted);
+		font-size: 1rem;
+		transition: color 0.15s ease, border-color 0.15s ease;
+		flex-shrink: 0;
+	}
+
+	#nav-close:hover {
+		color: var(--fg);
+		border-color: var(--fg-muted);
+	}
+
+	#mobile-nav-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		flex: 1;
+	}
+
+	#mobile-nav-list a {
+		display: block;
+		padding: 0.75rem 0.875rem;
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--fg-muted);
+		text-decoration: none;
+		border-radius: 8px;
+		transition: background 0.15s ease, color 0.15s ease;
+	}
+
+	#mobile-nav-list a:hover {
+		background: var(--bg-card);
+		color: var(--fg);
+	}
+
+	#mobile-cta-link {
+		display: block;
+		text-align: center;
+		padding: 0.75rem 1rem;
+		background: var(--accent);
+		color: var(--btn-primary-text) !important;
+		font-weight: 700;
+		font-size: 0.9375rem;
+		border-radius: 8px;
+		text-decoration: none;
+		transition: background 0.15s ease;
+	}
+
+	#mobile-cta-link:hover {
+		background: var(--accent-hover);
+		color: var(--btn-primary-text) !important;
+	}
+
+	#nav-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 99;
+		background: rgba(0, 0, 0, 0.5);
+		display: none;
+		backdrop-filter: blur(2px);
+		-webkit-backdrop-filter: blur(2px);
+	}
+
+	#nav-backdrop.open {
+		display: block;
+	}
+</style>
+
+<!-- Scoped styles for the header bar itself -->
+<style>
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		background: rgba(10, 15, 30, 0.88);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border-bottom: 1px solid var(--border);
+	}
+
+	:global(html.light) .site-header {
+		background: rgba(250, 250, 248, 0.88);
+	}
+
+	.nav-inner {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		height: 4rem;
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	.nav-logo {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		text-decoration: none;
+		flex-shrink: 0;
+	}
+
+	.logo-initials {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		background: var(--accent);
+		color: #0a0a0a;
+		font-weight: 700;
+		font-size: 0.75rem;
+		border-radius: 6px;
+		letter-spacing: 0.05em;
+		flex-shrink: 0;
+	}
+
+	.logo-name {
+		font-weight: 700;
+		font-size: 0.9375rem;
+		color: var(--fg);
+		letter-spacing: -0.01em;
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 0.125rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		flex: 1;
+	}
+
+	.nav-cta {
+		flex-shrink: 0;
+		padding: 0.4rem 1rem;
+		background: var(--accent);
+		color: var(--btn-primary-text);
+		font-weight: 700;
+		font-size: 0.875rem;
+		border-radius: 6px;
+		text-decoration: none;
+		transition: background 0.15s ease, color 0.15s ease;
+	}
+
+	.nav-cta:hover {
+		background: var(--accent-hover);
+		color: var(--btn-primary-text);
+	}
+
+	.hamburger {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		gap: 5px;
+		width: 2.25rem;
+		height: 2.25rem;
+		background: none;
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		cursor: pointer;
+		padding: 0.375rem 0.5rem;
+		margin-left: auto;
+		flex-shrink: 0;
+	}
+
+	.ham-line {
+		display: block;
+		width: 100%;
+		height: 1.5px;
+		background: var(--fg);
+		border-radius: 2px;
+	}
+
+	@media (max-width: 900px) {
+		.nav-cta { display: none; }
+	}
+
+	@media (max-width: 640px) {
+		.nav-links { display: none; }
+		.logo-name { display: none; }
+		.hamburger { display: flex; }
+	}
+</style>

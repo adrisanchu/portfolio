@@ -1,0 +1,257 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const skillGroups = [
+	{
+		label: "Software Development",
+		color: "accent",
+		skills: [
+			{ name: "Python", level: "expert" },
+			{ name: "TypeScript", level: "proficient" },
+			{ name: "SvelteKit", level: "proficient" },
+			{ name: "FastAPI", level: "proficient" },
+			{ name: "Node.js", level: "comfortable" },
+			{ name: "HTML / CSS", level: "proficient" },
+		],
+	},
+	{
+		label: "Data & BI",
+		color: "accent",
+		skills: [
+			{ name: "SQL", level: "expert" },
+			{ name: "DuckDB", level: "proficient" },
+			{ name: "Power BI (DAX, M)", level: "expert" },
+			{ name: "Data Modelling", level: "proficient" },
+			{ name: "pandas", level: "expert" },
+			{ name: "ETL Pipelines", level: "proficient" },
+		],
+	},
+	{
+		label: "Cloud & Infrastructure",
+		color: "accent",
+		skills: [
+			{ name: "AWS (S3, EC2, Glue, SageMaker, Bedrock)", level: "comfortable" },
+			{ name: "Docker", level: "proficient" },
+			{ name: "Cloudflare Pages", level: "proficient" },
+			{ name: "PostgreSQL", level: "proficient" },
+			{ name: "MySQL", level: "comfortable" },
+			{ name: "MongoDB", level: "comfortable" },
+		],
+	},
+	{
+		label: "Project Management",
+		color: "accent",
+		skills: [
+			{ name: "PMO & Earned Value", level: "expert" },
+			{ name: "Agile / Scrum", level: "proficient" },
+			{ name: "Budget Control", level: "expert" },
+			{ name: "Risk Management", level: "proficient" },
+			{ name: "Primavera P6", level: "proficient" },
+			{ name: "Stakeholder Management", level: "proficient" },
+		],
+	},
+	{
+		label: "Engineering Domain",
+		color: "accent",
+		skills: [
+			{ name: "Power Grid Systems", level: "expert" },
+			{ name: "Nuclear Engineering", level: "proficient" },
+			{ name: "Energy Infrastructure", level: "expert" },
+			{ name: "Thermal Hydraulics", level: "comfortable" },
+			{ name: "Grid Planning (TSO)", level: "expert" },
+			{ name: "ArcGIS / Geospatial", level: "comfortable" },
+		],
+	},
+	{
+		label: "Tools & Workflow",
+		color: "accent",
+		skills: [
+			{ name: "Git", level: "proficient" },
+			{ name: "VS Code", level: "expert" },
+			{ name: "Jira", level: "proficient" },
+			{ name: "Excel (advanced)", level: "expert" },
+			{ name: "Figma", level: "comfortable" },
+			{ name: "Linux / Bash", level: "comfortable" },
+		],
+	},
+];
+
+const levelLabel: Record<string, string> = {
+	expert: "Expert",
+	proficient: "Proficient",
+	comfortable: "Comfortable",
+};
+---
+
+<Layout
+	title="Skills"
+	description="Technical skills taxonomy — software development, data engineering, cloud, project management, and energy domain expertise."
+>
+	<div class="skills-page">
+		<header class="page-header">
+			<p class="page-label">Skills</p>
+			<h1 class="page-title">Skill Taxonomy</h1>
+			<p class="page-intro">
+				Six domains spanning software engineering, data, infrastructure, project management, and energy systems.
+				Proficiency levels are honest — "Expert" means I use it daily and have built production systems with it.
+			</p>
+			<div class="legend">
+				<span class="legend-item expert">Expert</span>
+				<span class="legend-item proficient">Proficient</span>
+				<span class="legend-item comfortable">Comfortable</span>
+			</div>
+		</header>
+
+		<div class="groups-grid">
+			{skillGroups.map(group => (
+				<div class="skill-group">
+					<h2 class="group-title">{group.label}</h2>
+					<ul class="skill-list" role="list">
+						{group.skills.map(skill => (
+							<li class="skill-item">
+								<span class="skill-name">{skill.name}</span>
+								<span class:list={['skill-level', skill.level]}>{levelLabel[skill.level]}</span>
+							</li>
+						))}
+					</ul>
+				</div>
+			))}
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.skills-page {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 3rem 1.5rem 5rem;
+	}
+
+	.page-header {
+		max-width: 44rem;
+		margin-bottom: 3rem;
+	}
+
+	.page-label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--accent);
+		margin-bottom: 0.75rem;
+	}
+
+	.page-title {
+		font-size: clamp(2rem, 5vw, 3rem);
+		letter-spacing: -0.03em;
+		color: var(--fg);
+		margin-bottom: 1rem;
+	}
+
+	.page-intro {
+		font-size: 1.0625rem;
+		color: var(--fg-muted);
+		line-height: 1.7;
+		margin: 0 0 1.5rem;
+	}
+
+	.legend {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.legend-item {
+		padding: 0.25rem 0.625rem;
+		border-radius: 4px;
+		font-size: 0.8125rem;
+		font-weight: 600;
+	}
+
+	.legend-item.expert {
+		background: rgba(245, 158, 11, 0.15);
+		color: var(--accent);
+		border: 1px solid rgba(245, 158, 11, 0.3);
+	}
+
+	.legend-item.proficient {
+		background: rgba(148, 163, 184, 0.1);
+		color: var(--fg-muted);
+		border: 1px solid var(--border);
+	}
+
+	.legend-item.comfortable {
+		background: transparent;
+		color: var(--fg-muted);
+		border: 1px solid var(--border);
+		opacity: 0.6;
+	}
+
+	.groups-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr));
+		gap: 1.5rem;
+	}
+
+	.skill-group {
+		padding: 1.5rem;
+		background: var(--bg-card);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+	}
+
+	.group-title {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+		margin-bottom: 1rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.skill-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.skill-item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.skill-name {
+		font-size: 0.9375rem;
+		color: var(--fg);
+	}
+
+	.skill-level {
+		font-size: 0.75rem;
+		font-weight: 600;
+		padding: 0.15rem 0.5rem;
+		border-radius: 3px;
+		flex-shrink: 0;
+	}
+
+	.skill-level.expert {
+		background: rgba(245, 158, 11, 0.12);
+		color: var(--accent);
+	}
+
+	.skill-level.proficient {
+		background: rgba(148, 163, 184, 0.08);
+		color: var(--fg-muted);
+	}
+
+	.skill-level.comfortable {
+		color: var(--fg-muted);
+		opacity: 0.5;
+	}
+</style>

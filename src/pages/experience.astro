@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import { getCollection, render } from 'astro:content';
+
+const entries = (await getCollection('experience'))
+	.sort((a, b) => a.data.order - b.data.order);
+
+const renderedEntries = await Promise.all(
+	entries.map(async (entry) => {
+		const { Content } = await render(entry);
+		return { entry, Content };
+	})
+);
+---
+
+<Layout
+	title="Experience"
+	description="Professional timeline — from nuclear engineering in France to software architecture at Spain's national grid operator."
+>
+	<div class="experience-page">
+		<header class="page-header">
+			<p class="page-label">Experience</p>
+			<h1 class="page-title">Professional Timeline</h1>
+			<p class="page-intro">
+				Eight years across nuclear engineering, major infrastructure PMO, energy technology, and software architecture.
+				Three countries. One consistent thread: building things that need to work reliably.
+			</p>
+		</header>
+
+		<div class="timeline">
+			{renderedEntries.map(({ entry, Content }, i) => (
+				<ExperienceItem
+					company={entry.data.company}
+					role={entry.data.role}
+					start={entry.data.start}
+					end={entry.data.end}
+					location={entry.data.location}
+					tags={entry.data.tags}
+					isLast={i === renderedEntries.length - 1}
+				>
+					<Content />
+				</ExperienceItem>
+			))}
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.experience-page {
+		max-width: 48rem;
+		margin: 0 auto;
+		padding: 3rem 1.5rem 5rem;
+	}
+
+	.page-header {
+		margin-bottom: 3.5rem;
+		padding-bottom: 2.5rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.page-label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--accent);
+		margin-bottom: 0.75rem;
+	}
+
+	.page-title {
+		font-size: clamp(2rem, 5vw, 3rem);
+		letter-spacing: -0.03em;
+		color: var(--fg);
+		margin-bottom: 1rem;
+	}
+
+	.page-intro {
+		font-size: 1.0625rem;
+		color: var(--fg-muted);
+		line-height: 1.7;
+		margin: 0;
+	}
+
+	.timeline {
+		padding-left: 0.25rem;
+	}
+</style>

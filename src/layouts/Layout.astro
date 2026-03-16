@@ -1,0 +1,71 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import DevThemeToggle from '../components/DevThemeToggle.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	isHomepage?: boolean;
+}
+
+const { title, description, image, isHomepage = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} image={image} isHomepage={isHomepage} />
+		<!-- Theme init: read persisted preference before first paint to avoid flash -->
+		<script is:inline>
+			(function () {
+				var stored = localStorage.getItem('theme');
+				if (stored === 'light') {
+					document.documentElement.classList.add('light');
+					document.documentElement.classList.remove('dark');
+				} else if (stored === 'dark') {
+					document.documentElement.classList.add('dark');
+					document.documentElement.classList.remove('light');
+				}
+				// If no stored preference, CSS media query handles it automatically
+			})();
+		</script>
+	</head>
+	<body>
+		<Header />
+		<div class="scroll-area" id="scroll-area">
+			<main>
+				<slot />
+			</main>
+			<Footer />
+		</div>
+		<DevThemeToggle />
+
+		<!-- Intersection Observer fallback for browsers without animation-timeline:view() -->
+		<script is:inline>
+			(function () {
+				if (typeof IntersectionObserver === 'undefined') return;
+				if (CSS.supports && CSS.supports('animation-timeline', 'view()')) return;
+
+				var els = document.querySelectorAll('.reveal-hidden');
+				if (!els.length) return;
+
+				var observer = new IntersectionObserver(
+					function (entries) {
+						entries.forEach(function (entry) {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-visible');
+								observer.unobserve(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+				);
+
+				els.forEach(function (el) { observer.observe(el); });
+			})();
+		</script>
+	</body>
+</html>

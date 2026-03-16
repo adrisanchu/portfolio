@@ -1,0 +1,80 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+	.sort((a, b) => b.data.year - a.data.year);
+---
+
+<Layout
+	title="Projects"
+	description="Case studies from five years of building software for Spain's national energy grid — full-stack apps, data pipelines, and internal tooling."
+>
+	<div class="projects-page">
+		<header class="page-header">
+			<p class="page-label">Projects</p>
+			<h1 class="page-title">Case Studies</h1>
+			<p class="page-intro">
+				Most of these projects are confidential — no source code or internal screenshots.
+				Each case study describes the context, my specific role, the technical approach, and the measurable outcome.
+			</p>
+		</header>
+
+		<div class="projects-grid">
+			{projects.map((project) => (
+				<ProjectCard
+					slug={project.id}
+					title={project.data.title}
+					summary={project.data.summary}
+					stack={project.data.stack}
+					year={project.data.year}
+					featured={project.data.featured}
+					confidential={project.data.confidential}
+				/>
+			))}
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.projects-page {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 3rem 1.5rem 5rem;
+	}
+
+	.page-header {
+		max-width: 42rem;
+		margin-bottom: 3rem;
+	}
+
+	.page-label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--accent);
+		margin-bottom: 0.75rem;
+	}
+
+	.page-title {
+		font-size: clamp(2rem, 5vw, 3rem);
+		letter-spacing: -0.03em;
+		color: var(--fg);
+		margin-bottom: 1rem;
+	}
+
+	.page-intro {
+		font-size: 1.0625rem;
+		color: var(--fg-muted);
+		line-height: 1.7;
+		margin: 0;
+	}
+
+	.projects-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+		gap: 1.25rem;
+	}
+</style>
